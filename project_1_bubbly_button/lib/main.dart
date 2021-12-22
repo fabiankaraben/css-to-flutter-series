@@ -31,6 +31,11 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // const Text("Some Top Content"),
+            // OutlinedButton(
+            //   onPressed: () {},
+            //   child: const Text("Some Top Content"),
+            // ),
+            // const SizedBox(height: 10),
             BubblyButton(
               child: const Text(
                 "Click me!",
@@ -40,7 +45,12 @@ class HomePage extends StatelessWidget {
                 //
               },
             ),
+            // const SizedBox(height: 10),
             // const Text("Some Bottom Content"),
+            // OutlinedButton(
+            //   onPressed: () {},
+            //   child: const Text("Some Bottom Content"),
+            // ),
           ],
         ),
       ),
@@ -51,11 +61,21 @@ class HomePage extends StatelessWidget {
 class BubblyButton extends StatefulWidget {
   final VoidCallback onPressed;
   final Widget child;
+  final Color color;
+  final Color textColor;
+  final Color shadowColor;
+  final double bubbleWidth;
+  final Color bubbleColor;
 
   const BubblyButton({
     Key? key,
     required this.onPressed,
     required this.child,
+    this.color = const Color(0xffff0081),
+    this.textColor = Colors.white,
+    this.bubbleWidth = 12,
+    this.shadowColor = const Color(0xffff0082),
+    this.bubbleColor = const Color(0xffff0081),
   }) : super(key: key);
 
   @override
@@ -64,25 +84,30 @@ class BubblyButton extends StatefulWidget {
 
 class _BubblyButtonState extends State<BubblyButton>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  // Input configuration
+  late final Color _buttonColor;
+  late final Color _textColor;
+  late final double _bubbleWidth;
+  late final Color _shadowColor;
+  late final Color _bubbleColor;
 
-  var buttonPadding = const EdgeInsets.symmetric(vertical: 16, horizontal: 32);
-
+  // Variable for implicit button animation
   var buttonScale = 1.0;
 
-  static const Color fuschia = Color(0xffff0081);
-  static const Color buttonBg = fuschia;
-  static const Color buttonTextColor = Color(0xffffffff);
-  static const Color babyBlue = Color(0xfff8faff);
-
-  late CurvedAnimation _offsetCurvedAnimation;
+  // Variables for explicit bubble animation
+  late AnimationController _animationController;
+  late final CurvedAnimation _offsetCurvedAnimation;
   late final Animation<double> _scaleAnimation;
-
-  final bubbleWidth = 12;
 
   @override
   void initState() {
     super.initState();
+
+    _buttonColor = widget.color;
+    _textColor = widget.textColor;
+    _bubbleWidth = widget.bubbleWidth;
+    _shadowColor = widget.shadowColor;
+    _bubbleColor = widget.bubbleColor;
 
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 600),
@@ -128,17 +153,17 @@ class _BubblyButtonState extends State<BubblyButton>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .6,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .6,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
-                    slideBeginOffset: const Offset(0, -.3),
+                    slideBeginOffset: const Offset(0.5, -.3),
                     slideEndOffset: const Offset(-5, -.5),
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * 1.4,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * 1.4,
                     filled: false,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(0, -.3),
@@ -146,8 +171,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .6,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .6,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-3, -.3),
@@ -155,8 +180,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .7,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .7,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-3, -.3),
@@ -164,8 +189,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .6,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .6,
                     filled: false,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-3.5, -.3),
@@ -173,8 +198,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .4,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .4,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-8, -.3),
@@ -182,8 +207,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .5,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .5,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-6, -.3),
@@ -191,8 +216,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .5,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .5,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-3, -.3),
@@ -200,8 +225,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .8,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .8,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(-3, -.3),
@@ -218,8 +243,8 @@ class _BubblyButtonState extends State<BubblyButton>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .5,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .5,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(0, .3),
@@ -227,8 +252,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .6,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .6,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(1, .3),
@@ -236,8 +261,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .5,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .5,
                     filled: false,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(2, .3),
@@ -245,8 +270,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .8,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .8,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(3, .3),
@@ -254,8 +279,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .6,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .6,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(4.5, .3),
@@ -263,8 +288,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .4,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .4,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(3, .3),
@@ -272,8 +297,8 @@ class _BubblyButtonState extends State<BubblyButton>
                     scaleAnimation: _scaleAnimation,
                   ),
                   _AnimatedCircle(
-                    color: fuschia,
-                    width: bubbleWidth * .7,
+                    color: _bubbleColor,
+                    width: _bubbleWidth * .7,
                     filled: true,
                     slideAnimation: _offsetCurvedAnimation,
                     slideBeginOffset: const Offset(0, .3),
@@ -288,46 +313,53 @@ class _BubblyButtonState extends State<BubblyButton>
         GestureDetector(
           onTapDown: (details) {
             setState(() {
-              buttonScale = .9;
-            });
-          },
-          onTapUp: (details) {
-            setState(() {
-              buttonScale = 1;
-
-              _animationController.reset();
-              _animationController.forward();
+              buttonScale = .93;
             });
           },
           child: AnimatedScale(
             duration: const Duration(milliseconds: 100),
             scale: buttonScale,
             child: Container(
-              constraints: BoxConstraints(minWidth: bubbleWidth * 9),
-              padding: buttonPadding,
-              decoration: BoxDecoration(
-                  color:
-                      buttonScale == 1.0 ? buttonBg : const Color(0xffe60074),
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(
-                        255,
-                        0,
-                        130,
-                        buttonScale == 1.0 ? .5 : .3,
-                      ),
-                      offset: const Offset(0.0, 2.0),
-                      blurRadius: 25.0,
-                      spreadRadius: 0.0,
-                    ),
-                  ]),
-              child: DefaultTextStyle(
-                style: const TextStyle(
-                  color: buttonTextColor,
-                  fontSize: 16,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    buttonScale = 1;
+
+                    _animationController.reset();
+                    _animationController.forward();
+
+                    widget.onPressed();
+                  });
+                },
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    color: _textColor,
+                    fontSize: 16,
+                  ),
+                  child: widget.child,
                 ),
-                child: widget.child,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: _buttonColor,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 24,
+                    horizontal: 32,
+                  ),
+                  minimumSize: Size(_bubbleWidth * 9, 16),
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                boxShadow: [
+                  BoxShadow(
+                    color: _shadowColor.withOpacity(
+                      buttonScale == 1.0 ? .5 : .3,
+                    ),
+                    offset: const Offset(0.0, 2.0),
+                    blurRadius: 25.0,
+                    spreadRadius: 0.0,
+                  ),
+                ],
               ),
             ),
           ),
