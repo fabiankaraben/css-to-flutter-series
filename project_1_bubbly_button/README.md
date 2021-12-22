@@ -58,10 +58,6 @@ Column(
 )
 ```
 
-This looks like this:
-
-![bubblyButton2.gif](https://cdn.hashnode.com/res/hashnode/image/upload/v1640131667771/UdEWdHUon.gif)
-
 You can even customize the colors and size of the bubbles:
 
 ```dart
